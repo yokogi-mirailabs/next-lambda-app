@@ -1,0 +1,13 @@
+{
+  "name": "lambda-todo-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev:frontend": "pnpm --filter frontend dev",
+    "dev:backend": "pnpm --filter backend dev",
+    "build:frontend": "pnpm --filter frontend build",
+    "deploy:backend": "pnpm --filter backend deploy",
+    "test": "pnpm --filter frontend test && pnpm --filter backend test",
+    "test:e2e": "pnpm --filter e2e test"
+  }
+}
