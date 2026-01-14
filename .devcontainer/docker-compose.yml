@@ -10,28 +10,11 @@ services:
       - backend_node_modules:/workspace/backend/node_modules
       - e2e_node_modules:/workspace/e2e/node_modules
     ports:
-      - "3000:3000"   # Frontend
-      - "3001:3001"   # Backend (serverless-offline)
-    depends_on:
-      - db
-    environment:
-      - DATABASE_URL=postgresql://postgres:postgres@db:5432/lambda_todo?schema=public
-
-  db:
-    image: postgres:16
-    restart: unless-stopped
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: lambda_todo
-    ports:
-      - "5432:5432"
+      - "3000:3000"
+      - "3001:3001"
 
 volumes:
   node_modules:
   frontend_node_modules:
   backend_node_modules:
   e2e_node_modules:
-  postgres_data:

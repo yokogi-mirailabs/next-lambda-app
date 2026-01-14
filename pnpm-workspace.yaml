@@ -1,4 +1,15 @@
 packages:
-  - "frontend"
-  - "backend"
-  - "e2e"
+  - frontend
+  - backend
+  - e2e
+
+ignoredBuiltDependencies:
+  - esbuild
+  - msw
+  - serverless
+  - sharp
+  - unrs-resolver
+
+onlyBuiltDependencies:
+  - '@prisma/engines'
+  - prisma

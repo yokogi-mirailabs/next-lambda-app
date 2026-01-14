@@ -2,22 +2,24 @@ service: lambda-todo-api
 
 provider:
   name: aws
-  runtime: nodejs20.x
   region: ap-northeast-1
   stage: ${opt:stage, 'dev'}
   environment:
     DATABASE_URL: ${env:DATABASE_URL}
-    COGNITO_USER_POOL_ID: ${env:COGNITO_USER_POOL_ID}
+    COGNITO_USER_POOL_ID: ap-northeast-1_TKEh96dsn
+    COGNITO_CLIENT_ID: 20g0n4dr7ppj37lf6ejnc6q31t
   httpApi:
     cors: true
+    authorizers:
+      cognitoAuthorizer:
+        type: jwt
+        identitySource: $request.header.Authorization
+        issuerUrl: https://cognito-idp.ap-northeast-1.amazonaws.com/ap-northeast-1_TKEh96dsn
+        audience:
+          - 20g0n4dr7ppj37lf6ejnc6q31t
 
 plugins:
   - serverless-offline
-
-build:
-  esbuild:
-    bundle: true
-    minify: false
 
 custom:
   serverless-offline:
@@ -26,29 +28,37 @@ custom:
 
 functions:
   listTodos:
-    handler: src/handlers/todos/list.handler
+    image: 523473396068.dkr.ecr.ap-northeast-1.amazonaws.com/serverless-lambda-todo-api-dev:lambda-todo
     events:
       - httpApi:
           path: /todos
           method: get
+          authorizer:
+            name: cognitoAuthorizer
 
   createTodo:
-    handler: src/handlers/todos/create.handler
+    image: 523473396068.dkr.ecr.ap-northeast-1.amazonaws.com/serverless-lambda-todo-api-dev:lambda-todo
     events:
       - httpApi:
           path: /todos
           method: post
+          authorizer:
+            name: cognitoAuthorizer
 
   updateTodo:
-    handler: src/handlers/todos/update.handler
+    image: 523473396068.dkr.ecr.ap-northeast-1.amazonaws.com/serverless-lambda-todo-api-dev:lambda-todo
     events:
       - httpApi:
           path: /todos/{id}
           method: put
+          authorizer:
+            name: cognitoAuthorizer
 
   deleteTodo:
-    handler: src/handlers/todos/delete.handler
+    image: 523473396068.dkr.ecr.ap-northeast-1.amazonaws.com/serverless-lambda-todo-api-dev:lambda-todo
     events:
       - httpApi:
           path: /todos/{id}
           method: delete
+          authorizer:
+            name: cognitoAuthorizer

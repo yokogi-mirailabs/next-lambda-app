@@ -45,4 +45,5 @@ prisma/migrations/
 backend/src/handlers/
 !backend/src/handlers/**/*.ts
 
-.pnpm-store/
+.pnpm-store/aws/
+awscliv2.zip
